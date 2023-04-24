@@ -108,10 +108,44 @@ let getAll = async () => {
     }
   }
   
-module.exports={
-    addUser,
-    getAll,
-    deleteUser,
-    findByPhoneNumber,
-    findById
-}
+  let updateUser = async (data) => {
+    let id = data.id
+    const usersRef = database.ref('users');
+    const userRef = usersRef.child(id);
+  
+    try {
+      const snapshot = await userRef.once('value');
+      const user = snapshot.val();
+  
+      if (user !== null) {
+        await userRef.update({
+          firstName: data.firstName || user.firstName,
+          lastName: data.lastName || user.lastName,
+          phoneNumber: data.phoneNumber || user.phoneNumber,
+          password: data.password || user.password,
+          email: data.email || user.email,
+          image: data.image || user.image,
+          address: data.address || user.address,
+          birth: data.birth || user.birth,
+          gender: data.gender || user.gender,
+          status: data.status || user.status,
+        });
+        console.log(`Cập nhật thông tin user có id=${id} thành công`);
+      } else {
+        console.log(`Không tìm thấy user có id=${id}`);
+      }
+    } catch (error) {
+      console.error(`Cập nhật thông tin user có id=${id} thất bại`, error);
+      throw error;
+    }
+  }
+  
+  module.exports={
+      addUser,
+      getAll,
+      deleteUser,
+      findByPhoneNumber,
+      findById,
+      updateUser
+  }
+  

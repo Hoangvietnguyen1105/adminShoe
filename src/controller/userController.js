@@ -7,7 +7,6 @@ let addUserController = async(req,res)=>{
 }
 let getAllUser = async(req,res)=>{
     let data = await userDb.getAll();
-    console.log(data)
    res.render('adminUser.ejs',{data:data})
 }
 let formAddUser = (req,res)=>{
@@ -37,11 +36,17 @@ let updateUser = async(req,res)=>{
     console.log(data)
     res.render('formUpdateUser.ejs',{data:data})
 }
+let cfUpdateUser = async(req,res)=>{
+    let data = await req.body;
+    await userDb.updateUser(data)
+    res.redirect('/user/getAllUser');
+}
 module.exports={
     addUserController,
     getAllUser,
     formAddUser,
     deleteUser,
     findByPhoneNumber,
-    updateUser
+    updateUser,
+    cfUpdateUser
 }

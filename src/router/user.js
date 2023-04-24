@@ -8,4 +8,6 @@ router.get('/formAddUser',usersController.formAddUser);
 router.get('/deleteUser',usersController.deleteUser);
 router.get('/findByPhoneNumber',usersController.findByPhoneNumber);
 router.get('/updateUser',usersController.updateUser)
+router.post('/updateUser',usersController.cfUpdateUser)
+
 module.exports = router;

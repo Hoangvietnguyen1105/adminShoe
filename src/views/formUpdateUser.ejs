@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        header {
+                background-color: #333;
+                color: #fff;
+                padding: 20px;
+            }
+
+            nav {
+                background-color: #444;
+                color: #fff;
+                padding: 10px;
+            }
+
+            nav ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            nav li {
+                display: inline;
+                margin-right: 10px;
+            }
+
+            nav a {
+                color: #fff;
+                text-decoration: none;
+            }
+            footer {
+                background-color: #333;
+                color: #fff;
+                padding: 10px;
+                text-align: center;
+            }
+            form {
+  width: 70%;
+  margin: 0 auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+select {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+input[type="date"] {
+  display: block;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+button[type="submit"] {
+  background-color: #333;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button[type="submit"]:hover {
+  background-color: #333;
+}
+
+
+    </style>
+</head>
+<body>
+    <header>
+		<h1>Trang quản trị</h1>
+	</header>
+	<nav>
+		<ul>
+			<li><a href="/user/getAllUser">Quản lí Người dùng</a></li>
+			<li><a href="#">Quản lí Sản phẩm</a></li>
+			<li><a href="#">Quản lí Bình luận</a></li>
+            <li><a href="#">Quản lí Hoá đơn</a></li>
+		</ul>
+	</nav>
+    <form action="/user/updateUser" method="POST">
+        <input type="hidden" name="id" value="<%= data.id %>">
+        <label for="firstName">First name:</label>
+        <input type="text" id="firstName" name="firstName" value="<%= data.firstName %>">
+    
+        <label for="lastName">Last name:</label>
+        <input type="text" id="lastName" name="lastName" value="<%= data.lastName %>">
+    
+        <label for="phoneNumber">Phone number:</label>
+        <input type="text" id="phoneNumber" name="phoneNumber" value="<%= data.phoneNumber %>">
+    
+        <label for="password">Password:</label>
+        <input type="text" id="password" name="password" value="<%= data.password %>">
+    
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="<%= data.email %>">
+    
+        <label for="image">Image:</label>
+        <input type="text" id="image" name="image" value="<%= data.image %>">
+    
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" value="<%= data.address %>">
+    
+        <label for="birth">Birth:</label>
+        <input type="date" id="birth" name="birth" value="<%= data.birth %>">
+    
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender">
+            <option value="male" <% if (data.gender === 'male') { %>selected<% } %>>Male</option>
+            <option value="female" <% if (data.gender === 'female') { %>selected<% } %>>Female</option>
+        </select>
+    
+        <label for="status">Status:</label>
+        <select id="status" name="status">
+            <option value="customer" <% if (data.status === 'customer') { %>selected<% } %>>Customer</option>
+            <option value="admin" <% if (data.status === 'admin') { %>selected<% } %>>Admin</option>
+        </select>
+    
+        <button type="submit">Update</button>
+    </form>
+    <footer>
+		<p>Bản quyền © 2023, tất cả các quyền được bảo lưu.</p>
+	</footer>
+</body>
+</html>

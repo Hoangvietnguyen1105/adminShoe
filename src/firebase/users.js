@@ -1,7 +1,11 @@
 const database = require('./db.js');
 
 let addUser = async (data) => {
-    const usersRef = database.ref('users');
+    let user1 = await findByPhoneNumber(data.phoneNumber);
+    let user2 = await findByEmail(data.email)
+    
+    if(user1===null &&user2 === null){
+        const usersRef = database.ref('users');
     const newUserRef = usersRef.push();
   
     const newUser = {
@@ -20,11 +24,17 @@ let addUser = async (data) => {
   
     newUserRef.set(newUser)
       .then(() => {
-        console.log('Thêm user mới thành công');
-      })
+        return Promise.resolve('Thêm user mới thành công');      })
       .catch((error) => {
-        console.error('Thêm user mới thất bại', error);
+        return Promise.reject('Thêm user mới thất bại', error);
       });
+    }
+    else{
+        console.log(user1)
+        console.log(user2)
+        return"Trùng thông tin"
+    }
+    
 }
 let getAll = async () => {
     const usersRef = database.ref('users');
@@ -40,7 +50,6 @@ let getAll = async () => {
         };
         users.push(user);
       });
-      console.log(users)
       return users;
     } catch (error) {
       console.error('Lấy danh sách user thất bại', error);
@@ -139,7 +148,33 @@ let getAll = async () => {
       throw error;
     }
   }
+  let findByEmail = async (email) => {
+    const usersRef = database.ref('users');
+    const query = usersRef.orderByChild('email').equalTo(email);
   
+    try {
+      const snapshot = await query.once('value');
+      const users = [];
+  
+      snapshot.forEach(childSnapshot => {
+        const user = {
+          id: childSnapshot.key,
+          ...childSnapshot.val()
+        };
+        users.push(user);
+      });
+  
+      if (users.length > 0) {
+        return users[0];
+      } else {
+        console.log(`Không tìm thấy user email=${email}`);
+        return null;
+      }
+    } catch (error) {
+      console.error(`Tìm kiếm user theo email=${email} thất bại`, error);
+      throw error;
+    }
+  }
   module.exports={
       addUser,
       getAll,

@@ -2,15 +2,22 @@ const userDb = require('../firebase/users.js')
 
 let addUserController = async(req,res)=>{
    let data =await req.body;
-   await userDb.addUser(data);
-   res.redirect('/user/getAllUser');
+   let msg  = await userDb.addUser(data);
+   
+   if(msg !=="Trùng thông tin"){
+    res.redirect('/user/getAllUser');
+   }
+   else{
+    res.render('formAddUser.ejs',{data:msg})
+   }
+   
 }
 let getAllUser = async(req,res)=>{
     let data = await userDb.getAll();
    res.render('adminUser.ejs',{data:data})
 }
 let formAddUser = (req,res)=>{
-    res.render('formAddUser.ejs')
+    res.render('formAddUser.ejs',{data:""})
 }
 let deleteUser = async(req,res)=>{
     let id = req.query.id
